@@ -24,26 +24,28 @@ pipeline {
          steps {
            echo 'Building..'
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
-           junit 'iTrust2/target/surefire-reports/**/*.xml'
-                jacoco(
-                    execPattern: 'iTrust2/target/coverage-reports/*.exec',
-                    classPattern: 'iTrust2/target/classes',
-                    sourcePattern: 'iTrust2/src/main/java',
-                    exclusionPattern: 'iTrust2/src/test*',
-                    changeBuildStatus: true,
-                    minimumInstructionCoverage: '50'
-                )
-                checkstyle(
-                    pattern: 'iTrust2/target/checkstyle-result.xml',
-                    failedTotalAll: '0'
-                )
          }
       }
       stage ('Analysis') {
-         steps {
-             sh '${M2_HOME}/bin/mvn --batch-mode -V -U -e checkstyle:checkstyle pmd:pmd pmd:cpd findbugs:findbugs spotbugs:spotbugs'
-             recordIssues enabledForFailure: true, tool: checkStyle()
-            }
+        steps {
+             junit 'iTrust2/target/surefire-reports/**/*.xml'
+             jacoco(
+                 execPattern: 'iTrust2/target/coverage-reports/*.exec',
+                 classPattern: 'iTrust2/target/classes',
+                 sourcePattern: 'iTrust2/src/main/java',
+                 exclusionPattern: 'iTrust2/src/test*',
+                 changeBuildStatus: true,
+                 minimumInstructionCoverage: '50'
+             )
+             checkstyle(
+                 pattern: 'iTrust2/target/checkstyle-result.xml',
+                 failedTotalAll: '0'
+             )
+             pmd (
+                canRunOnFailed: true, 
+                pattern: 'build/logs/pmd.xml'
+             )
+        }
       }
       
    }
