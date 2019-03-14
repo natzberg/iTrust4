@@ -19,6 +19,14 @@ pipeline {
            echo 'Building..'
            sh 'cd iTrust2 && mvn -f pom-data.xml process-test-classes'
            sh 'cd iTrust2 && mvn jetty:run &'
+           timeout(5) {
+             waitUntil {
+                script {
+                  def r = sh script: 'wget -q http://ec2-3-83-205-182.compute-1.amazonaws.com:8080/iTrust2', returnStatus: true
+                  return (r == 0);
+                }
+             }
+           }
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
          }
       }
