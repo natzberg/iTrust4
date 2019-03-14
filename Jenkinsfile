@@ -19,14 +19,13 @@ pipeline {
            writeFile file: "iTrust2/"
            echo 'Building..'
            sh 'cd iTrust2 && mvn -f pom-data.xml process-test-classes'
-           def START_SERVER = sh (
-             returnStdout: true,
-             script: 'cd iTrust2 && mvn jetty:run'
-           ).trim()
-           when ("${START_SERVER}".contains("Started Jetty Server")) { 
-             echo "Yes"
-             sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
-           }
+            waitUntil {
+               script{
+                  def start_server = sh script: 'cd iTrust2 && mvn jetty:run', returnStdout: true
+                  return (start_server.trim().contains("Started Jetty Server"));
+               }
+            }    
+           sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
          }
       }
       stage('test') {
@@ -38,6 +37,6 @@ pipeline {
       steps {
            echo 'Deploying....'
       }
-      }
+     }
    }
 }
