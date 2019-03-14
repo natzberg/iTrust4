@@ -2,8 +2,8 @@ pipeline {
    agent any
    environment {
         MYSQL_PASSWORD = 'blah'
-        MAIL_USER = 'ncsudevops.s19'
-        MAIL_PASSWORD = 'Zorro1997'
+        MAIL_USER = 'team4.devops.s19'
+        MAIL_PASSWORD = 'W0lfw@re'
         MAIL_SMTP = 'smtp.gmail.com'
    }
    stages {
