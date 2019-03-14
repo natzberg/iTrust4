@@ -20,8 +20,9 @@ pipeline {
            sh 'cd iTrust2 && mvn -f pom-data.xml process-test-classes'
             waitUntil {
                script{
+                  def get_status = sh script: 'curl http://ec2-3-83-205-182.compute-1.amazonaws.com:8080/iTrust2', returnStatus: true
                   def start_server = sh script: 'cd iTrust2 && mvn jetty:run', returnStdout: true
-                  return (start_server.trim().contains("Started Jetty Server"));
+                  return (get_status == 0);
                }
             }    
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
