@@ -20,7 +20,7 @@ pipeline {
            echo 'Building..'
            sh 'cd iTrust2 && mvn -f pom-data.xml process-test-classes'
            START_SERVER = sh (
-              script: 'cd iTrust2 && mvn jetty:run'
+              script: 'cd iTrust2 && mvn jetty:run',
               returnStdout: true
            ).trim()
             when ("${START_SERVER}".contains("Started Jetty Server")) { 
