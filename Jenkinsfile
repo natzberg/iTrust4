@@ -21,9 +21,9 @@ pipeline {
            sh 'cd iTrust2 && mvn -f pom-data.xml process-test-classes'
            START_SERVER = sh (
               script: 'cd iTrust2 && mvn jetty:run'
-              returnStdout = true
+              returnStdout: true
            ).trim()
-           when (START_SERVER.contains("Started Jetty Server")) { 
+            when ("${START_SERVER}".contains("Started Jetty Server")) { 
              echo "Yes"
              sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
            }
