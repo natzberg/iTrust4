@@ -24,7 +24,7 @@ pipeline {
          steps {
            echo 'Building..'
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
-            junit 'iTrust2/target/surefire-reports/**/*.xml'
+           junit 'iTrust2/target/surefire-reports/**/*.xml'
                 jacoco(
                     execPattern: 'iTrust2/target/coverage-reports/*.exec',
                     classPattern: 'iTrust2/target/classes',
@@ -41,29 +41,10 @@ pipeline {
       }
       stage ('Analysis') {
          steps {
-           def mvnHome = tool 'mvn-default'
-
-           sh "${mvnHome}/bin/mvn -batch-mode -V -U -e checkstyle:checkstyle pmd:pmd pmd:cpd findbugs:findbugs"
-
-           def checkstyle = scanForIssues tool: checkStyle(pattern: '**/target/checkstyle-result.xml')
-           publishIssues issues: [checkstyle]
-
-           def pmd = scanForIssues tool: pmdParser(pattern: '**/target/pmd.xml')
-           publishIssues issues: [pmd]
-
-           def cpd = scanForIssues tool: cpd(pattern: '**/target/cpd.xml')
-           publishIssues issues: [cpd]
-
-           def spotbugs = scanForIssues tool: spotBugs(pattern: '**/target/findbugsXml.xml')
-           publishIssues issues: [spotbugs]
-
-           def maven = scanForIssues tool: mavenConsole()
-           publishIssues issues: [maven]
-
-           publishIssues id: 'analysis', name: 'All Issues', 
-               issues: [checkstyle, pmd, spotbugs], 
-               filters: [includePackage('io.jenkins.plugins.analysis.*')]
-         }
+             sh '${M2_HOME}/bin/mvn --batch-mode -V -U -e checkstyle:checkstyle pmd:pmd pmd:cpd findbugs:findbugs spotbugs:spotbugs'
+             recordIssues enabledForFailure: true, tool: checkStyle()
+            }
       }
+      
    }
 }
