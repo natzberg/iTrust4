@@ -27,6 +27,8 @@ pipeline {
                 }
              }
            }
+           sh 'cd iTrust2/src/test/java/edu/ncsu/csc/itrust2/utils/ && javac HibernateDataGenerator.java'
+           sh 'cd iTrust2/src/test/java/edu/ncsu/csc/itrust2/utils/ && java HibernateDataGenerator'
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
          }
       }
