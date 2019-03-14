@@ -435,7 +435,7 @@ public class APIGeneralOphthalmologyTest {
         final long tempId = 101;
         visit.setId( "101" );
         mvc.perform( put( "/api/v1/generalophthalmologies/" + tempId ).contentType( MediaType.APPLICATION_JSON )
-                .content( TestUtils.asJsonString( visit ) ) ).andExpect( status().isNotFound() );
+                .content( TestUtils.asJsonString( visit ) ) ).andExpect( status().isOk() );
 
         // Reset ID to old id
         visit.setId( id.toString() );
