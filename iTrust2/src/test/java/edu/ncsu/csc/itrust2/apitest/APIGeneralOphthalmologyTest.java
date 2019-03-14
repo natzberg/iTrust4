@@ -432,8 +432,8 @@ public class APIGeneralOphthalmologyTest {
                 .content( TestUtils.asJsonString( visit ) ) ).andExpect( status().isConflict() );
 
         // PUT with ID not in database should fail
-        final long tempId = 101;
-        visit.setId( "101" );
+        final long tempId = 1001;
+        visit.setId( "1001" );
         mvc.perform( put( "/api/v1/generalophthalmologies/" + tempId ).contentType( MediaType.APPLICATION_JSON )
                 .content( TestUtils.asJsonString( visit ) ) ).andExpect( status().isNotFound() );
 
