@@ -83,7 +83,7 @@ var fuzzer =
 if( process.env.NODE_ENV != "test")
 {
     fuzzer.seed(0);
-    mutationTesting(['test.md','simple.md'],1000);
+    mutationTesting([__dirname + '/../main/java/edu/ncsu/csc/itrust2/config/ContextListener.java'],10);
 }
 
 function mutationTesting(paths,iterations)
@@ -93,17 +93,18 @@ function mutationTesting(paths,iterations)
     var passedTests = 0;
     
     var markDownA = fs.readFileSync(paths[0],'utf-8');
-    var markDownB = fs.readFileSync(paths[1],'utf-8');
+    // var markDownB = fs.readFileSync(paths[1],'utf-8');
     
     for (var i = 0; i < iterations; i++) {
         let mutuatedString = ""
-        if(i%2 == 1){
-            mutuatedString = fuzzer.mutate.string(markDownA);
-        }
-        else{
-            mutuatedString = fuzzer.mutate.string(markDownB);
-        }
+        // if(i%2 == 1){
+        //     mutuatedString = fuzzer.mutate.string(markDownA);
+        // }
+        // else{
+        //     mutuatedString = fuzzer.mutate.string(markDownB);
+        // }
         
+        mutuatedString = fuzzer.mutate.string(markDownA);
         try
         {
             marqdown.render(mutuatedString);
