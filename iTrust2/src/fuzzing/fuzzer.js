@@ -4,7 +4,7 @@ var main = require("../main");
 describe("Sanity check", function() {
   describe("mutationTesting runs", function() {
     it("doesn't crash", function() {
-        main.mutationTesting([__dirname + '/../main/java/edu/ncsu/csc/itrust2/config/ContextListener.java'],100);
+        main.mutationTesting(['test.md','simple.md'],100);
     });
   });
 
