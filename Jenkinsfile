@@ -7,11 +7,6 @@ pipeline {
         MAIL_SMTP = 'smtp.gmail.com'
    }
    stages {
-      stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/natzberg/iTrust4.git']]])
-            }
-        }
       stage('setup') {
          steps {
             echo 'Setting up...'
