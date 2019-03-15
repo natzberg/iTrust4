@@ -42,6 +42,13 @@ pipeline {
              )
         }
       }
-      
+      stage ('Fuzzer') {
+         when {
+            branch: 'fuzzer'
+         }
+         steps {
+            echo "Hi from fuzzer"
+         }
+      }
    }
 }
