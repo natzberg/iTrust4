@@ -44,7 +44,7 @@ pipeline {
       }
       stage ('Fuzzer') {
          when {
-            branch: 'fuzzer'
+            branch 'fuzzer'
          }
          steps {
             echo "Hi from fuzzer"
