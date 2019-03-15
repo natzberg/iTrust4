@@ -53,7 +53,7 @@ var fuzzer =
                 // add random characters
                 for(var i = 0; i < array.length; i++){
                     var randomString = fuzzer.random.string(1)
-                    array.splice(i, 0, randomString)
+                    array = array.splice(i, 0, randomString)
                 }
             }
 
@@ -74,7 +74,6 @@ var fuzzer =
             // // add random characters
             // var randomString = fuzzer.random.string(10)
             // array.splice(length - 1, 0, randomString)
-
             return array.join('');
         }
     }
@@ -83,7 +82,7 @@ var fuzzer =
 if( process.env.NODE_ENV != "test")
 {
     fuzzer.seed(0);
-    mutationTesting([__dirname + '/../main/java/edu/ncsu/csc/itrust2/config/ContextListener.java'],10);
+    mutationTesting([__dirname + '/../main/java/edu/ncsu/csc/itrust2/config/ContextListener.java'],1000);
 }
 
 function mutationTesting(paths,iterations)
@@ -103,7 +102,6 @@ function mutationTesting(paths,iterations)
         // else{
         //     mutuatedString = fuzzer.mutate.string(markDownB);
         // }
-        
         mutuatedString = fuzzer.mutate.string(markDownA);
         try
         {
