@@ -6,11 +6,11 @@ var Random = require('random-js')
 
 var fuzzer = 
 {
-    random : new Random(Random.engines.mt19937().seed(0)),
+    random : new Random(Random.engines.mt19937()),
     
     seed: function (kernel)
     {
-        fuzzer.random = new Random(Random.engines.mt19937().seed(kernel));
+        fuzzer.random = new Random(Random.engines.mt19937());
     },
 
     mutate:
