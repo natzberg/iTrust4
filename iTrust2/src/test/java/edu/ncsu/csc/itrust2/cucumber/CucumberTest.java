@@ -12,7 +12,7 @@ public abstract class CucumberTest {
 
     static {
         //ChromeDriverManager.getInstance().setup();
-        ChromeDriverManager.getInstance().version("2.46").setup();
+        ChromeDriverManager.getInstance().version("73.0.3683.68").setup();
     }
 
     final static private String   BASE_URL = "http://localhost:8080/iTrust2/";
