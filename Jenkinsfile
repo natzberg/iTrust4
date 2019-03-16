@@ -27,7 +27,6 @@ pipeline {
         steps {
              junit 'iTrust2/target/surefire-reports/**/*.xml'
              jacoco(
-                 canRunOnFailed: true,
                  execPattern: 'iTrust2/target/coverage-reports/*.exec',
                  classPattern: 'iTrust2/target/classes',
                  sourcePattern: 'iTrust2/src/main/java',
@@ -36,7 +35,6 @@ pipeline {
                  minimumInstructionCoverage: '50'
              )
              checkstyle(
-                 canRunOnFailed: true,
                  pattern: 'iTrust2/target/checkstyle-result.xml',
                  failedTotalAll: '0'
              )
