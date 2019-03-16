@@ -1,5 +1,8 @@
 pipeline {
    agent any
+   options {
+        timeout(time: 15, unit: 'MINUTES') 
+    }
    environment {
         MYSQL_PASSWORD = 'blah'
         MAIL_USER = 'team4.devops.s19'
