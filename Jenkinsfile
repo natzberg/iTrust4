@@ -18,7 +18,6 @@ pipeline {
       stage('build') {
          steps {
            echo 'Building..'
-           sh 'cd iTrust2 && mvn jetty:run'
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
          }
       }
