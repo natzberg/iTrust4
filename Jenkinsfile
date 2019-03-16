@@ -18,9 +18,7 @@ pipeline {
       stage('build') {
          steps {
            echo 'Building..'
-           set +e
            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
-           set -e
          }
       }
       stage ('Analysis') {
