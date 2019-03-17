@@ -15,15 +15,13 @@ pipeline {
             sh 'cd iTrust2 && mvn -f pom-data.xml process-test-classes'
          }
       }
-      stage('build') {
+      stage('build and test') {
          steps {
-           echo 'Building..'
-           sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
-         }
-      }
-      stage ('Analysis') {
-        steps {
-             junit 'iTrust2/target/surefire-reports/**/*.xml'
+            echo 'Building..'
+            sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
+            
+            echo 'JUnit, Jacoco, and Checkstyle'
+            junit 'iTrust2/target/surefire-reports/**/*.xml'
              jacoco(
                  execPattern: 'iTrust2/target/coverage-reports/*.exec',
                  classPattern: 'iTrust2/target/classes',
@@ -40,6 +38,11 @@ pipeline {
                 canRunOnFailed: true, 
                 pattern: 'build/logs/pmd.xml'
              )
+         }
+      }
+      stage ('Analysis') {
+        steps {
+          echo 'Maybe put analysis?'
         }
       }
       
