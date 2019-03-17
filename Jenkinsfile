@@ -1,4 +1,7 @@
 pipeline {
+   options {
+        timeout(time: 15, unit: 'MINUTES') 
+    }
    agent any
    environment {
         MYSQL_PASSWORD = 'blah'
