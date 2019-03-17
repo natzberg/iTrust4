@@ -22,7 +22,10 @@ pipeline {
          steps {
             echo 'Building..'
             sh 'cd iTrust2 && mvn clean test verify checkstyle:checkstyle'
-            
+         }
+      }
+      post {
+        always {
             echo 'JUnit, Jacoco, and Checkstyle'
             junit 'iTrust2/target/surefire-reports/**/*.xml'
              jacoco(
@@ -41,13 +44,8 @@ pipeline {
                 canRunOnFailed: true, 
                 pattern: 'build/logs/pmd.xml'
              )
-         }
-      }
-      stage ('Analysis') {
-        steps {
-          echo 'Maybe put analysis?'
         }
-      }
+}
       
    }
 }
