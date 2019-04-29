@@ -382,6 +382,11 @@
 			<version>1.5.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>5.1.6.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>

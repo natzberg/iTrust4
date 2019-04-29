@@ -100,15 +100,32 @@
         $scope.resetSelected = function () {
           $scope.selectedDrug = {};
         };
-
+        
         // load table initially
         $scope.loadTable();
+
+        $scope.featureStatus = false;
+        $scope.loadFeature = function () {
+          $http.get("/iTrust2/api/v1/drugsFeature").then(
+            function (response) {
+              $scope.featureStatus = response.data;
+              $scope.message = "THIS WORKS " + response.data;
+            }, function (rejection) {
+              $scope.message = "THIS DOESNTWORKS";
+            });
+        }
+        
+        $scope.loadFeature();
       });
 			/*]]>*/
     </script>
 
 
+    <div *ngIf="!featureStatus">
+      <p>THIS FEATURE IS NOT AVAILABLE CURRENTLY</p>
+    </div>
 
+    <div *ngIf="featureStatus">
     <div ng-app="drugsApp" ng-controller="drugsCtrl">
       <div class="container">
         <div class="row">
@@ -211,6 +228,9 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    </div>
 </body>
 
 </html>

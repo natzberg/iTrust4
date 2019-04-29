@@ -2,6 +2,7 @@ package edu.ncsu.csc.itrust2.controllers.api;
 
 import java.util.List;
 
+import org.hibernate.engine.spi.Status;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,9 @@ import edu.ncsu.csc.itrust2.forms.admin.DrugForm;
 import edu.ncsu.csc.itrust2.models.enums.TransactionType;
 import edu.ncsu.csc.itrust2.models.persistent.Drug;
 import edu.ncsu.csc.itrust2.utils.LoggerUtil;
+import io.lettuce.core.*;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
 
 /**
  * Provides REST endpoints that deal with drugs. Exposes functionality to add,
@@ -141,8 +145,26 @@ public class APIDrugController extends APIController {
      */
     @GetMapping ( BASE_PATH + "/drugs" )
     public List<Drug> getDrugs () {
+
         LoggerUtil.log( TransactionType.DRUG_VIEW, LoggerUtil.currentUser(), "Fetched list of drugs" );
         return Drug.getAll();
+    }
+
+    @GetMapping(BASE_PATH + "/drugsFeature" )
+    public boolean featureStatus(){
+        RedisClient client = RedisClient.create("redis://localhost");
+        StatefulRedisConnection<String, String> connection = client.connect();
+        RedisCommands<String, String> syncCommands = connection.sync();
+        boolean status = false;
+        String value = syncCommands.get("endpoint-active");
+        if(value != null && value.equals("on")){
+            status = true;
+        }
+
+        connection.close();
+        client.shutdown();
+
+        return status;
     }
 
 }
